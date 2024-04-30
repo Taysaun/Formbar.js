@@ -108,7 +108,6 @@ function displayPreviousPolls() {
 function buildPreviousPolls(data) {
 	previousPollButtons.innerHTML = ''
 	let br = document.createElement('br')
-
 	for (let pollIndex = data.length - 1; pollIndex >= 0; pollIndex--) {
 		let pollButton = document.createElement('button')
 		pollButton.type = 'button'
@@ -129,21 +128,47 @@ function buildPreviousPolls(data) {
 		previousPollDiv.style.display = 'none'
 
 		let previousPollPrompt = document.createElement('p')
-		previousPollPrompt.textContent = `Prompt: ${data[pollIndex].data.prompt}`
+		if (data[pollIndex].data.prompt){
+			previousPollPrompt.textContent = `Prompt: ${data[pollIndex].data.prompt}`
+		} else {
+			previousPollPrompt.textContent = `Prompt: No prompt`
+		}
 		previousPollDiv.appendChild(previousPollPrompt)
 
 		for (let userIndex = 0; userIndex < data[pollIndex].data.names.length; userIndex++) {
 			let username = document.createElement('p')
-			username.textContent = `Name: ${data[pollIndex].data.names[userIndex]}`
-			previousPollDiv.appendChild(username)
+			if (data[pollIndex].data.letter[userIndex] || data[pollIndex].data.text[userIndex]) {
+				username.textContent = `Name: ${data[pollIndex].data.names[userIndex]}`
+			} else {
+				username.textContent = ""
+			}
+			if(username.textContent){
+				previousPollDiv.appendChild(username)
+			}
+			// previousPollDiv.appendChild(username)
 
 			let letter = document.createElement('p')
-			letter.textContent = `Letter: ${data[pollIndex].data.letter[userIndex]}`
-			previousPollDiv.appendChild(letter)
+			if (data[pollIndex].data.letter[userIndex]) {
+				letter.textContent = `Letter: ${data[pollIndex].data.letter[userIndex]}`
+			} else {
+				letter.textContent = ""
+			}
+			// letter.textContent = `Letter: ${data[pollIndex].data.letter[userIndex]}`
+			if(letter.textContent){
+				previousPollDiv.appendChild(letter)
+			}
 
 			let text = document.createElement('p')
-			text.textContent = `Text: ${data[pollIndex].data.text[userIndex]}`
-			previousPollDiv.appendChild(text)
+			if (data[pollIndex].data.text[userIndex]) {
+				text.textContent = `Text: ${data[pollIndex].data.text[userIndex]}`
+			} else {
+				text.textContent = ""
+			}
+			// text.textContent = `Text: ${data[pollIndex].data.text[userIndex]}`
+			if(text.textContent){
+				previousPollDiv.appendChild(text)
+			}
+			// previousPollDiv.appendChild(text)
 		}
 		previousPolls.appendChild(previousPollDiv)
 	}
