@@ -118,15 +118,15 @@ function buildPreviousPolls(data) {
 			displayPoll(data[pollIndex].id)
 		}
 		previousPollButtons.appendChild(pollButton)
-
+		
 		previousPollButtons.appendChild(br.cloneNode(true))
-
-
-		let previousPollDiv = document.createElement('div')
+		
+		var previousPollDiv = document.createElement('div')
+		
 		previousPollDiv.className = 'previousPoll'
 		previousPollDiv.id = data[pollIndex].id
 		previousPollDiv.style.display = 'none'
-
+		
 		let previousPollPrompt = document.createElement('p')
 		if (data[pollIndex].data.prompt){
 			previousPollPrompt.textContent = `Prompt: ${data[pollIndex].data.prompt}`
@@ -134,7 +134,7 @@ function buildPreviousPolls(data) {
 			previousPollPrompt.textContent = `Prompt: No prompt`
 		}
 		previousPollDiv.appendChild(previousPollPrompt)
-
+		
 		for (let userIndex = 0; userIndex < data[pollIndex].data.names.length; userIndex++) {
 			let username = document.createElement('p')
 			if (data[pollIndex].data.letter[userIndex] || data[pollIndex].data.text[userIndex]) {
@@ -145,36 +145,32 @@ function buildPreviousPolls(data) {
 			if(username.textContent){
 				previousPollDiv.appendChild(username)
 			}
-			// previousPollDiv.appendChild(username)
-
+			
 			let letter = document.createElement('p')
 			if (data[pollIndex].data.letter[userIndex]) {
 				letter.textContent = `Letter: ${data[pollIndex].data.letter[userIndex]}`
 			} else {
 				letter.textContent = ""
 			}
-			// letter.textContent = `Letter: ${data[pollIndex].data.letter[userIndex]}`
 			if(letter.textContent){
 				previousPollDiv.appendChild(letter)
 			}
-
+			
 			let text = document.createElement('p')
 			if (data[pollIndex].data.text[userIndex]) {
 				text.textContent = `Text: ${data[pollIndex].data.text[userIndex]}`
 			} else {
 				text.textContent = ""
 			}
-			// text.textContent = `Text: ${data[pollIndex].data.text[userIndex]}`
 			if(text.textContent){
 				previousPollDiv.appendChild(text)
 			}
-			// previousPollDiv.appendChild(text)
 		}
 		previousPolls.appendChild(previousPollDiv)
 	}
 }
-
-function displayPoll(id) {
+	
+	function displayPoll(id) {
 	if (id) {
 		let previousPollDivs = document.getElementsByClassName('previousPoll')
 
