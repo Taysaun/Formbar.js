@@ -873,3 +873,7 @@ div.break {
 #ticket {
 	background-color: white;
 }
+
+.pollName {
+	display: inline-block;
+}

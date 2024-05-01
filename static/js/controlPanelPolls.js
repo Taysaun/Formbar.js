@@ -106,68 +106,98 @@ function displayPreviousPolls() {
 
 //makes the previous polls page
 function buildPreviousPolls(data) {
-	previousPollButtons.innerHTML = ''
-	let br = document.createElement('br')
-	for (let pollIndex = data.length - 1; pollIndex >= 0; pollIndex--) {
-		let pollButton = document.createElement('button')
-		pollButton.type = 'button'
-		pollButton.className = 'quickButton'
-		pollButton.textContent = data[pollIndex].date + ' ' + data[pollIndex].data.prompt
-		pollButton.onclick = (event) => {
-			event.preventDefault()
-			displayPoll(data[pollIndex].id)
-		}
-		previousPollButtons.appendChild(pollButton)
-		
-		previousPollButtons.appendChild(br.cloneNode(true))
-		
-		var previousPollDiv = document.createElement('div')
-		
-		previousPollDiv.className = 'previousPoll'
-		previousPollDiv.id = data[pollIndex].id
-		previousPollDiv.style.display = 'none'
-		
-		let previousPollPrompt = document.createElement('p')
-		if (data[pollIndex].data.prompt){
-			previousPollPrompt.textContent = `Prompt: ${data[pollIndex].data.prompt}`
+	previousPolls.innerHTML = ''
+	for (let pollIndex = 0; pollIndex < data.length; pollIndex++) {
+		var poll = data[pollIndex]
+
+		var pollDiv = document.createElement('div')
+		pollDiv.className = 'previousPoll'
+		pollDiv.id = poll.id
+		pollDiv.style.border = '1px solid black'
+
+		var pollPrompt = document.createElement('p')
+		if (poll.data.prompt){
+			pollPrompt.textContent = `Prompt: ${poll.data.prompt}`
 		} else {
-			previousPollPrompt.textContent = `Prompt: No prompt`
+			pollPrompt.textContent = `Prompt: No prompt`
 		}
-		previousPollDiv.appendChild(previousPollPrompt)
-		
-		for (let userIndex = 0; userIndex < data[pollIndex].data.names.length; userIndex++) {
-			let username = document.createElement('p')
-			if (data[pollIndex].data.letter[userIndex] || data[pollIndex].data.text[userIndex]) {
-				username.textContent = `Name: ${data[pollIndex].data.names[userIndex]}`
-			} else {
-				username.textContent = ""
-			}
-			if(username.textContent){
-				previousPollDiv.appendChild(username)
-			}
-			
-			let letter = document.createElement('p')
-			if (data[pollIndex].data.letter[userIndex]) {
-				letter.textContent = `Letter: ${data[pollIndex].data.letter[userIndex]}`
-			} else {
-				letter.textContent = ""
-			}
-			if(letter.textContent){
-				previousPollDiv.appendChild(letter)
-			}
-			
-			let text = document.createElement('p')
-			if (data[pollIndex].data.text[userIndex]) {
-				text.textContent = `Text: ${data[pollIndex].data.text[userIndex]}`
-			} else {
-				text.textContent = ""
-			}
-			if(text.textContent){
-				previousPollDiv.appendChild(text)
-			}
+		pollDiv.appendChild(pollPrompt)
+
+		for (let userIndex = 0; userIndex < poll.data.names.length; userIndex++) {
+			var pollNames = document.createElement('div')
+			pollNames.className = 'pollNames'
+			pollNames.textContent = poll.data.names[userIndex]
+			var pollLetter = document.createElement('div')
+			pollLetter.className = 'pollLetter'
+			pollLetter.textContent = poll.data.letter[userIndex]
+			pollNames.appendChild(pollLetter)
+			pollDiv.appendChild(pollNames)
 		}
-		previousPolls.appendChild(previousPollDiv)
+		previousPolls.appendChild(pollDiv)
 	}
+	// previousPollButtons.innerHTML = ''
+	// let br = document.createElement('br')
+	// for (let pollIndex = data.length - 1; pollIndex >= 0; pollIndex--) {
+	// 	let pollButton = document.createElement('button')
+	// 	pollButton.type = 'button'
+	// 	pollButton.className = 'quickButton'
+	// 	pollButton.textContent = data[pollIndex].date + ' ' + data[pollIndex].data.prompt
+	// 	pollButton.onclick = (event) => {
+	// 		event.preventDefault()
+	// 		displayPoll(data[pollIndex].id)
+	// 	}
+	// 	previousPollButtons.appendChild(pollButton)
+		
+	// 	previousPollButtons.appendChild(br.cloneNode(true))
+		
+	// 	var previousPollDiv = document.createElement('div')
+		
+	// 	previousPollDiv.className = 'previousPoll'
+	// 	previousPollDiv.id = data[pollIndex].id
+	// 	previousPollDiv.style.display = 'none'
+		
+	// 	let previousPollPrompt = document.createElement('p')
+	// 	if (data[pollIndex].data.prompt){
+	// 		previousPollPrompt.textContent = `Prompt: ${data[pollIndex].data.prompt}`
+	// 	} else {
+	// 		previousPollPrompt.textContent = `Prompt: No prompt`
+	// 	}
+	// 	previousPollDiv.appendChild(previousPollPrompt)
+		
+	// 	for (let userIndex = 0; userIndex < data[pollIndex].data.names.length; userIndex++) {
+	// 		let username = document.createElement('p')
+	// 		if (data[pollIndex].data.letter[userIndex] || data[pollIndex].data.text[userIndex]) {
+	// 			username.textContent = `Name: ${data[pollIndex].data.names[userIndex]}`
+	// 		} else {
+	// 			username.textContent = ""
+	// 		}
+	// 		if(username.textContent){
+	// 			previousPollDiv.appendChild(username)
+	// 		}
+			
+	// 		let letter = document.createElement('p')
+	// 		if (data[pollIndex].data.letter[userIndex]) {
+	// 			letter.textContent = `Letter: ${data[pollIndex].data.letter[userIndex]}`
+	// 		} else {
+	// 			letter.textContent = ""
+	// 		}
+	// 		if(letter.textContent){
+	// 			previousPollDiv.appendChild(letter)
+	// 		}
+			
+	// 		let text = document.createElement('p')
+	// 		if (data[pollIndex].data.text[userIndex]) {
+	// 			text.textContent = `Text: ${data[pollIndex].data.text[userIndex]}`
+	// 		} else {
+	// 			text.textContent = ""
+	// 		}
+	// 		if(text.textContent){
+	// 			previousPollDiv.appendChild(text)
+	// 		}
+	// 	}
+	// 	previousPolls.appendChild(previousPollDiv)
+	// }
+
 }
 	
 	function displayPoll(id) {
