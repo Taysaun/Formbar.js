@@ -107,13 +107,23 @@ function displayPreviousPolls() {
 //makes the previous polls page
 function buildPreviousPolls(data) {
 	previousPolls.innerHTML = ''
+	var br = document.createElement('br')
 	for (let pollIndex = 0; pollIndex < data.length; pollIndex++) {
+		var pollButton = document.createElement('button')
+		pollButton.type = 'button'
+		pollButton.className = 'quickButton'
+		pollButton.textContent = data[pollIndex].date + ' ' + data[pollIndex].data.prompt
+		pollButton.onclick = (event) => {
+			event.preventDefault()
+			displayPoll(data[pollIndex].id)
+		}
+		previousPolls.appendChild(pollButton)
+		previousPolls.appendChild(br.cloneNode(true))
 		var poll = data[pollIndex]
 
 		var pollDiv = document.createElement('div')
 		pollDiv.className = 'previousPoll'
 		pollDiv.id = poll.id
-		pollDiv.style.border = '1px solid black'
 
 		var pollPrompt = document.createElement('p')
 		if (poll.data.prompt){
@@ -126,29 +136,21 @@ function buildPreviousPolls(data) {
 		for (let userIndex = 0; userIndex < poll.data.names.length; userIndex++) {
 			var pollNames = document.createElement('div')
 			pollNames.className = 'pollNames'
-			pollNames.textContent = poll.data.names[userIndex]
+			pollNames.textContent = `${poll.data.names[userIndex]}: ` 
 			var pollLetter = document.createElement('div')
-			pollLetter.className = 'pollLetter'
-			pollLetter.textContent = poll.data.letter[userIndex]
-			pollNames.appendChild(pollLetter)
+			if (poll.data.letter[userIndex] || poll.data.text[userIndex]){
+				pollLetter.className = 'pollLetter'
+				pollLetter.textContent = `${poll.data.letter[userIndex]} "${poll.data.text[userIndex]}"`
+				pollNames.appendChild(pollLetter)
+			}
 			pollDiv.appendChild(pollNames)
 		}
 		previousPolls.appendChild(pollDiv)
+		pollDiv.style.display = 'none'
 	}
 	// previousPollButtons.innerHTML = ''
-	// let br = document.createElement('br')
 	// for (let pollIndex = data.length - 1; pollIndex >= 0; pollIndex--) {
-	// 	let pollButton = document.createElement('button')
-	// 	pollButton.type = 'button'
-	// 	pollButton.className = 'quickButton'
-	// 	pollButton.textContent = data[pollIndex].date + ' ' + data[pollIndex].data.prompt
-	// 	pollButton.onclick = (event) => {
-	// 		event.preventDefault()
-	// 		displayPoll(data[pollIndex].id)
-	// 	}
-	// 	previousPollButtons.appendChild(pollButton)
 		
-	// 	previousPollButtons.appendChild(br.cloneNode(true))
 		
 	// 	var previousPollDiv = document.createElement('div')
 		

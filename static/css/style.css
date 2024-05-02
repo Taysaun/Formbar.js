@@ -874,6 +874,17 @@ div.break {
 	background-color: white;
 }
 
-.pollName {
-	display: inline-block;
+.pollNames {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+}
+
+.previousPoll {
+	border-radius: 8px;
+	font-size: inherit;
+	font-family: inherit;
+	background-color: var(--bg-light-blue);
+	color: black;
+	border: 2px solid var(--theme-color);
 }
