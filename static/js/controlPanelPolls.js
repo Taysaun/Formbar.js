@@ -111,7 +111,8 @@ function buildPreviousPolls(data) {
 	for (let pollIndex = 0; pollIndex < data.length; pollIndex++) {
 		var pollButton = document.createElement('button')
 		pollButton.type = 'button'
-		pollButton.className = 'quickButton'
+		pollButton.className = 'quickButton previousPollButtons'
+		pollButton.id = data[pollIndex].id
 		pollButton.textContent = data[pollIndex].date + ' ' + data[pollIndex].data.prompt
 		pollButton.onclick = (event) => {
 			event.preventDefault()
@@ -204,9 +205,9 @@ function buildPreviousPolls(data) {
 	
 	function displayPoll(id) {
 	if (id) {
-		let previousPollDivs = document.getElementsByClassName('previousPoll')
+		var previousPollDivs = document.getElementsByClassName('previousPoll')
+		var previousPollButtons = document.getElementsByClassName('quickButton previousPollButtons')
 
-		previousPollButtons.style.display = 'none'
 		toPollsButton.style.display = 'none'
 		toPollHistoryButton.style.display = ''
 
@@ -216,14 +217,23 @@ function buildPreviousPolls(data) {
 			else
 				pollDiv.style.display = 'none'
 		}
+		for (let button of previousPollButtons) {
+			if (button.id == id)
+				button.style.display = 'inline-block'
+			else
+				button.style.display = 'none'
+		}
 	} else {
-		let previousPollDivs = document.getElementsByClassName('previousPoll')
-		previousPollButtons.style.display = 'block'
+		var previousPollDivs = document.getElementsByClassName('previousPoll')
+		var previousPollButtons = document.getElementsByClassName('quickButton previousPollButtons')
 		toPollsButton.style.display = ''
 		toPollHistoryButton.style.display = 'none'
 
 		for (let pollDiv of previousPollDivs) {
 			pollDiv.style.display = 'none'
+		}
+		for (let button of previousPollButtons) {
+			button.style.display = 'inline-block'
 		}
 	}
 }
