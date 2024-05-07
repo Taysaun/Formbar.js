@@ -318,7 +318,7 @@ function buildStudent(room, studentData) {
 }
 
 // filters and sorts students
-function filterSortChange() {
+function filterSortChange(classroom) {
     if (!classroom.students) return
 
     let userOrder = Object.keys(classroom.students)
@@ -334,14 +334,16 @@ function filterSortChange() {
         for (let username of userOrder.slice()) {
             let studentElement = document.getElementById(`student-${username}`);
             if (
-                ((filter.alert == 1 && !classroom.students[username].help && !classroom.students[username].break) || (filter.alert == 2 && (classroom.students[username].help || classroom.students[username].break)))
+                (
+                    (filter.alert == 1 && !classroom.students[username].help && !classroom.students[username].break) ||
+                    (filter.alert == 2 && (classroom.students[username].help || classroom.students[username].break))
+                )
             ) {
                 studentElement.style.display = 'none'
                 userOrder.pop(username)
             }
         }
     }
-
 
     // filter by poll
     if (filter.polls) {
@@ -374,12 +376,15 @@ function filterSortChange() {
             let studentA = classroom.students[a]
             let studentB = classroom.students[b]
 
+            const responses = Object.keys(classroom.polls.responses)
+
             if (studentA.pollRes.textRes && studentB.pollRes.textRes) {
                 return studentA.pollRes.textRes.localeCompare(studentB.pollRes.textRes)
             } else if (studentA.pollRes.textRes) return -1
             else if (studentB.pollRes.textRes) return 1
+
             if (studentA.pollRes.buttonRes && studentB.pollRes.buttonRes) {
-                return studentA.pollRes.buttonRes.localeCompare(studentB.pollRes.buttonRes)
+                return responses.indexOf(studentA.pollRes.buttonRes) - responses.indexOf(studentB.pollRes.buttonRes);
             } else if (studentA.pollRes.buttonRes) return -1
             else if (studentB.pollRes.buttonRes) return 1
         })
@@ -392,8 +397,9 @@ function filterSortChange() {
                 return studentB.pollRes.textRes.localeCompare(studentA.pollRes.textRes)
             } else if (studentA.pollRes.textRes) return 1
             else if (studentB.pollRes.textRes) return -1
+
             if (studentA.pollRes.buttonRes && studentB.pollRes.buttonRes) {
-                return studentB.pollRes.buttonRes.localeCompare(studentA.pollRes.buttonRes)
+                return responses.indexOf(studentB.pollRes.buttonRes) - responses.indexOf(studentA.pollRes.buttonRes);
             } else if (studentA.pollRes.buttonRes) return 1
             else if (studentB.pollRes.buttonRes) return -1
         })
@@ -421,6 +427,9 @@ function filterSortChange() {
         userOrder.sort((a, b) => {
             let studentA = classroom.students[a]
             let studentB = classroom.students[b]
+
+            if (!studentA.help.time) return 1
+            if (!studentB.help.time) return -1
 
             return studentA.help.time - studentB.help.time
         })
@@ -456,7 +465,7 @@ for (let filterElement of document.getElementsByClassName('filter')) {
         if (filter[filterElement.id] == 0) filterElement.classList.remove('pressed')
         else filterElement.classList.add('pressed')
         filterElement.textContent = FilterState[filterElement.id][filter[filterElement.id]]
-        filterSortChange()
+        filterSortChange(classroom)
     }
 }
 
@@ -485,7 +494,7 @@ for (let sortElement of document.getElementsByClassName('sort')) {
         if (sort[sortElement.id] == 0) sortElement.classList.remove('pressed')
         else sortElement.classList.add('pressed')
         sortElement.textContent = SortState[sortElement.id][sort[sortElement.id]]
-        filterSortChange()
+        filterSortChange(classroom)
     }
 }
 

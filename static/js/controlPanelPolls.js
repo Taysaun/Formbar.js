@@ -888,9 +888,6 @@ document.addEventListener('click', (event) => {
 	}
 })
 
-
-
-
 //Make the code above work
 var timerButton = document.getElementById('timerButton')
 timerButton.addEventListener('click', function () {
@@ -929,5 +926,4 @@ socket.on('timerOn', function (time) {
 		document.getElementById('playSound').hidden = false
 		timerStopButton.hidden = true
 	}
-	console.log(time);
 })
