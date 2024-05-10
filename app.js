@@ -3113,6 +3113,7 @@ io.on('connection', async (socket) => {
 					for (let i = 0; i < student.pollRes.buttonRes.length; i++) {
 						var studentRes = student.pollRes.buttonRes[i]
 						var studentId = student.id
+						//Adds row of data for button responses
 						db.run('INSERT INTO poll_answers(pollId, userId, buttonResponse) VALUES(?, ?, ?)', [currentPollId, studentId, studentRes], (err) => {
 							if (err) {
 								logger.log('error', err.stack)
@@ -3121,6 +3122,7 @@ io.on('connection', async (socket) => {
 					}
 					var studentTextRes = student.pollRes.textRes
 					var studentId = student.id
+					//Separate row of data for text responses
 					db.run('INSERT INTO poll_answers(pollId, userId, textResponse) VALUES(?, ?, ?)', [currentPollId, studentId, studentTextRes], (err) => {
 						if (err) {
 							logger.log('error', err.stack)

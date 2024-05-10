@@ -208,14 +208,17 @@ function buildPreviousPolls(data) {
 		var previousPollDivs = document.getElementsByClassName('previousPoll')
 		var previousPollButtons = document.getElementsByClassName('quickButton previousPollButtons')
 
+
 		toPollsButton.style.display = 'none'
 		toPollHistoryButton.style.display = ''
 
+
 		for (let pollDiv of previousPollDivs) {
-			if (pollDiv.id == id)
+			if (pollDiv.id == id) {
 				pollDiv.style.display = 'block'
-			else
+			} else {
 				pollDiv.style.display = 'none'
+			}
 		}
 		for (let button of previousPollButtons) {
 			if (button.id == id)

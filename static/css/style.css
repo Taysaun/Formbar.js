@@ -888,3 +888,8 @@ div.break {
 	color: black;
 	border: 2px solid var(--theme-color);
 }
+
+#previousPolls {
+	display: block;
+	width: auto;
+}
